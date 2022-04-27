@@ -34,12 +34,11 @@ a:visited {
   position: absolute;
   bottom: 50px;
   left: 50px;
-  display: block;
 }
 
 #controls #buttons {
   width: 80px;
-  opacity: 0;
+  opacity: 1;
   transition: opacity 2s;
 }
 
