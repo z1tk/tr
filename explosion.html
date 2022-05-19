@@ -3,57 +3,11 @@
 	<head>
 		<title>SPE: Explosion</title>
 		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-    <style>
-    * {
-	margin: 0;
-	padding: 0;
-}
-
-body {
-    color: white;
-    font-family: sans-serif;
-    overflow: hidden;
-    margin: 0;
-}
-
-p {
-    margin: 0.2em 0;
-}
-
-p.small {
-    font-size: 0.8em;
-}
-
-.numParticles {
-	position: absolute;
-	bottom: 10px;
-	left: 10px;
-	color: white;
-	text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
-}
-
-.alive-wrapper {
-    position: absolute;
-    top: 2em;
-    width: 25em;
-    left: 50%;
-    margin-left: -12.5em;
-    text-align: center;
-    padding: 1em;
-    background-color: rgba( 255, 255, 255, 0.15 );
-    border-radius: 1em;
-    border: 1px solid rgba( 255, 255, 255, 0.3 );
-}
-
-#stats {
-    position: absolute;
-    top: 0;
-    z-index: 2;
-}
-</style>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
 	</head>
 	<body>
 		<script type="text/javascript" src="THREE-r84.js"></script>
+    <script src="Stats.min.js"></script>
 	    <script type="text/javascript" src="SPE.min.js"></script>
 
 		<script type="text/javascript">
@@ -62,11 +16,13 @@ p.small {
 			    renderer = new THREE.WebGLRenderer( {
 			        antialias: true
 			    } ),
+			    stats = new Stats(),
 			    clock = new THREE.Clock();
 
 
 			function animate() {
 			    requestAnimationFrame( animate );
+			    stats.update();
 
 			    if ( typeof onAnimate === 'function' ) {
 			        onAnimate();
@@ -85,7 +41,7 @@ p.small {
 			clock.getDelta();
 			var group = new SPE.Group( {
 					texture: {
-						value: THREE.ImageUtils.loadTexture( './img/sprite-explosion2.png' ),
+						value: THREE.ImageUtils.loadTexture( 'https://raw.githubusercontent.com/squarefeet/ShaderParticleEngine/master/examples/img/sprite-explosion2.png' ),
 						frames: new THREE.Vector2( 5, 5 ),
 						loop: 1
 					},
@@ -96,7 +52,7 @@ p.small {
 				} ),
 				shockwaveGroup = new SPE.Group( {
 					texture: {
-						value: THREE.ImageUtils.loadTexture( './img/smokeparticle.png' ),
+						value: THREE.ImageUtils.loadTexture( 'https://raw.githubusercontent.com/squarefeet/ShaderParticleEngine/master/examples/img/smokeparticle.png' ),
 					},
 					depthTest: false,
 					depthWrite: true,
@@ -256,6 +212,7 @@ p.small {
 
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.body.appendChild( renderer.domElement );
+			document.body.appendChild( stats.domElement );
 
 			setTimeout( animate, 0 );
 		</script>
