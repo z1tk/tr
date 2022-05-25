@@ -1075,3 +1075,39 @@ window.addEventListener("resize", () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.render(scene, camera);
 });
+
+;(function(){
+  function id(v){ return document.getElementById(v); }
+  function loadbar() {
+    var ovrl = id("overlay"),
+        prog = id("progress"),
+        stat = id("progstat"),
+        con = document.children,
+        c = 0-1,
+        pc = 0,
+        tot = con.length;
+        conLoad();
+    if(tot == 0) return doneLoading();
+
+    function conLoad(){
+      Array.from({length: tot}, function() {
+          c += 1;
+          con[c].onload = function() {
+            pc += 1
+            var perc = ((100/tot*pc) << 0) + "%";
+            prog.style.width = perc;
+            stat.innerHTML = "Loading " + perc;
+            if(c = tot) return doneLoading();
+          }
+      })
+
+    }
+    function doneLoading(){
+      ovrl.style.opacity = 0;
+      setTimeout(function(){ 
+        ovrl.style.display = "none";
+      }, 1200);
+    } 
+  }
+  loadbar();
+}());
